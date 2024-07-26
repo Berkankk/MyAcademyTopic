@@ -1,0 +1,29 @@
+﻿@model UpdateQuestionDto
+@{
+    ViewData["Title"] = "UpdateQuestion";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Blog Alanı</h4>
+            <p class="card-description">
+                Yeni Blog Oluştur
+            </p>
+            <form class="forms-sample" method="post">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" asp-for="QuestionsID">
+                    <label>Başlık</label>
+                    <input type="text" class="form-control" asp-for="Title">
+                </div>
+                <div class="form-group">
+                    <label>Başlık</label>
+                    <textarea rows="5" id="summernote" class="form-control" asp-for="Description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mr-2">Güncelle</button>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,68 @@
+﻿@using Topic.WebUI.Dtos.BlogDtos
+@using Topic.WebUI.Dtos.CategoryDtos
+@model List<ResultBlogDto>
+
+@{
+    int count3 = 0;
+}
+
+<section class="explore-section section-padding" id="section_2">
+    <div class="container">
+        <div class="col-12 text-center">
+            <h2 class="mb-4">Blogları Keşfet</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                @if (ViewBag.Categories != null)
+                {
+                    foreach (var item in (List<ResultCategoryDto>)ViewBag.Categories)
+                    {
+                        count3++;
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @(count3 == 1 ? "active" : "")" id="@item.CategoryName-tab" data-bs-toggle="tab" data-bs-target="#@Html.Raw(item.CategoryName.Replace(" ", ""))-tab-pane" type="button" role="tab" aria-controls="@Html.Raw(item.CategoryName.Replace(" ", ""))-tab-pane" aria-selected="true">@item.CategoryName</button>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="tab-content" id="myTabContent">
+                    @if (ViewBag.Categories != null)
+                    {
+                        foreach (var category in (List<ResultCategoryDto>)ViewBag.Categories)
+                        {
+                            var blogsInCategory = Model.Where(t => t.Category.CategoryName == category.CategoryName).ToList();
+                            <div class="tab-pane fade @(category == ViewBag.Categories[0] ? "show active" : "")" id="@Html.Raw(category.CategoryName.Replace(" ", ""))-tab-pane" role="tabpanel" aria-labelledby="@Html.Raw(category.CategoryName.Replace(" ", ""))-tab" tabindex="0">
+                                <div class="row">
+                                    @foreach (var blog in blogsInCategory)
+                                    {
+                                        <div class="col-lg-4 col-md-6 col-12 mb-5 mb-lg-3">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="/Blog/GetBlogsDetails/@blog.BlogID">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">@blog.Title</h5>
+                                                            <p class="mb-0">@blog.ShortDescription</p>
+                                                        </div>
+                                                    </div>
+                                                    <img src="@blog.CoverImageUrl" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
